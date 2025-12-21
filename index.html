@@ -1,1 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Local Download Mirror</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+  
+<center><button id="download">Download ZIP</button></center>
+  
+<script>
+document.getElementById("download").addEventListener("click", async () => {
+  const zip = new JSZip();
 
+  // URL to the raw file on GitHub
+  const fileUrl = "https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/refs/heads/main/local.html";
+
+  const response = await fetch(fileUrl);
+  const fileContent = await response.text();
+
+  // Add the file to the zip
+  zip.file("local.html", fileContent);
+
+  // Generate the zip
+  const zipBlob = await zip.generateAsync({ type: "blob" });
+
+  // Download
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(zipBlob);
+  a.download = "wannadownload.zip";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+});
+</script>
+</body>
+</html>
