@@ -118,6 +118,32 @@ header {
 header img {
   display: block;
 }
+/* ===== HEADER CORRECTIONS ===== */
+
+/* Show the FULL header.png, no zoom/crop */
+header {
+  background-size: contain; /* instead of cover */
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Let header size be controlled naturally */
+  min-height: 180px; /* adjust once if needed */
+}
+
+/* Undo forced stretching of title.png */
+header img {
+  width: auto;        /* stop forcing full width */
+  height: auto;
+  max-width: 70%;     /* keeps it reasonable */
+  max-height: 70%;
+}
+
+/* Keep title centered only */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 </style>
 </head>
