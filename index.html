@@ -8,78 +8,60 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 <style>
-/* =========================
-   RESET
-========================= */
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-html, body {
-  height: 100%;
-}
-
-/* =========================
-   BODY BACKGROUND
-   (FULL FIT, NO CROP)
-========================= */
+/* Body background: fixed (non-scrolling) */
 body {
-  background: url("bg.png") center / contain no-repeat;
+  background-image: url("bg.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed; /* THIS stops scrolling */
+  background-size: cover; /* fills screen */
   color: #333;
   line-height: 1.6;
 }
 
-/* =========================
-   HEADER
-========================= */
+/* Header: no spacing, image controls size */
 header {
-  height: 200px; /* REQUIRED for image fitting */
-  background: url("header.png") center / contain no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin: 0;
+  padding: 0;
 }
 
 header img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
+  display: block;        /* removes inline spacing */
+  width: 100%;           /* fill header width */
+  height: auto;          /* keep natural ratio */
 }
 
-/* =========================
-   MAIN CONTAINER
-========================= */
+/* Container (unchanged layout-wise) */
 .container {
   max-width: 900px;
   margin: 2rem auto;
   background: white;
   border-radius: 12px;
-  overflow: hidden; /* connects banner + content */
+  overflow: hidden;
   box-shadow: 0 6px 20px rgba(0,0,0,0.12);
 }
 
-/* =========================
-   BANNER (INSIDE CONTAINER)
-========================= */
+/* Banner: image fully fills its div */
 .banner {
   width: 100%;
-  height: 250px;
+  height: 250px; /* your chosen height */
 }
 
 .banner img {
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain; /* FULL IMAGE, NO CROP */
-  display: block;
+  object-fit: cover; /* fills banner exactly */
 }
 
-/* =========================
-   CONTENT
-========================= */
+/* Content */
 .asset-card {
   padding: 1.5rem;
 }
@@ -98,9 +80,7 @@ header img {
   padding-left: 1.2rem;
 }
 
-/* =========================
-   DOWNLOAD BUTTON
-========================= */
+/* Button */
 .download-btn {
   padding: 0.6rem 1.2rem;
   background: #ff6f61;
@@ -115,9 +95,7 @@ header img {
   background: #e65a4f;
 }
 
-/* =========================
-   FOOTER
-========================= */
+/* Footer */
 footer {
   text-align: center;
   padding: 2rem 1rem;
