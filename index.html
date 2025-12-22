@@ -126,18 +126,22 @@
 <footer>
   &copy; 2025 SundaeZipper | All files free to download
 </footer>
-
 <script>
 document.getElementById("download").addEventListener("click", async () => {
   const zip = new JSZip();
 
+  // List all files including any subfolder files
   const files = [
     "WNASMLEv08/index.html",
     "WNASMLEv08/readme.txt",
     "WNASMLEv08/discovery.html",
     "WNASMLEv08/favorites.html",
     "WNASMLEv08/profile.html",
-    "WNASMLEv08/settings.html"
+    "WNASMLEv08/settings.html",
+    // Example of nested folder files:
+    "WNASMLEv08/pages/header/here/file1.html",
+    "WNASMLEv08/pages/header/here/file2.css"
+    // Add all other files in subfolders here
   ];
 
   for (const path of files) {
@@ -145,19 +149,26 @@ document.getElementById("download").addEventListener("click", async () => {
       const response = await fetch(`https://raw.githubusercontent.com/01110010-00110101/01110010-00110101.github.io/main/${path}`);
       if (!response.ok) throw new Error(`Failed to fetch ${path}`);
       const content = await response.text();
-      
+
+      // Split path into folders + filename
       const pathParts = path.split('/');
       const fileName = pathParts.pop();
       let folder = zip;
+
+      // Create nested folders dynamically
       for (const part of pathParts) {
-        folder = folder.folder(part);
+        folder = folder.folder(part); // create folder if it doesn't exist
       }
+
+      // Add file to the correct folder
       folder.file(fileName, content);
+
     } catch (err) {
       console.error(err);
     }
   }
 
+  // Generate zip and trigger download
   const zipBlob = await zip.generateAsync({ type: "blob" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(zipBlob);
