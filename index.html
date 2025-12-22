@@ -22,25 +22,26 @@ body {
   background-image: url("bg.png");
   background-repeat: no-repeat;
   background-position: center;
-  background-attachment: fixed; /* THIS stops scrolling */
-  background-size: cover; /* fills screen */
+  background-attachment: fixed;
+  background-size: cover;
   color: #333;
   line-height: 1.6;
 }
 
-/* Header: no spacing, image controls size */
+/* Header: background only, title.png uses natural size */
 header {
   margin: 0;
   padding: 0;
+  background-image: url("header.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-header img {
-  display: block;        /* removes inline spacing */
-  width: 100%;           /* fill header width */
-  height: auto;          /* keep natural ratio */
-}
-
-/* Container (unchanged layout-wise) */
+/* Container */
 .container {
   max-width: 900px;
   margin: 2rem auto;
@@ -50,17 +51,17 @@ header img {
   box-shadow: 0 6px 20px rgba(0,0,0,0.12);
 }
 
-/* Banner: image fully fills its div */
+/* Banner inside container */
 .banner {
   width: 100%;
-  height: 250px; /* your chosen height */
+  height: 250px;
 }
 
 .banner img {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* fills banner exactly */
+  object-fit: cover;
 }
 
 /* Content */
@@ -82,7 +83,7 @@ header img {
   padding-left: 1.2rem;
 }
 
-/* Button */
+/* Download button */
 .download-btn {
   padding: 0.6rem 1.2rem;
   background: #ff6f61;
@@ -103,56 +104,6 @@ footer {
   padding: 2rem 1rem;
   color: #777;
 }
-/* === HEADER FIX === */
-header {
-  background-image: url("header.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover; /* fills entire header */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Center title.png ONLY, no resizing */
-header img {
-  display: block;
-}
-/* ===== HEADER CORRECTIONS ===== */
-
-/* Show the FULL header.png, no zoom/crop */
-header {
-  background-size: contain; /* instead of cover */
-  background-position: center;
-  background-repeat: no-repeat;
-
-  /* Let header size be controlled naturally */
-  min-height: 180px; /* adjust once if needed */
-}
-
-/* Undo forced stretching of title.png */
-header img {
-  width: auto;        /* stop forcing full width */
-  height: auto;
-  max-width: 70%;     /* keeps it reasonable */
-  max-height: 70%;
-}
-
-/* Keep title centered only */
-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-/* === Header fixes for natural title size === */
-header img {
-  width: auto;       /* do not stretch */
-  height: auto;      /* keep original height */
-  max-width: none;   /* ignore any previous limits */
-  max-height: none;  /* ignore any previous limits */
-  display: block;    /* remove inline spacing */
-}
-
 </style>
 </head>
 
