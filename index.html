@@ -144,6 +144,14 @@ header {
   align-items: center;
   justify-content: center;
 }
+/* === Header fixes for natural title size === */
+header img {
+  width: auto;       /* do not stretch */
+  height: auto;      /* keep original height */
+  max-width: none;   /* ignore any previous limits */
+  max-height: none;  /* ignore any previous limits */
+  display: block;    /* remove inline spacing */
+}
 
 </style>
 </head>
