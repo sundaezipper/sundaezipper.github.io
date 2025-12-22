@@ -111,6 +111,33 @@
   object-fit: cover; /* ensures the image fully covers the container without stretching */
   display: block;
 }
+.container {
+  max-width: 900px;
+  margin: 2rem auto;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden; /* THIS is important */
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+/* Banner */
+.banner {
+  width: 100%;
+  height: 250px;
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Content area */
+.asset-card {
+  padding: 1.5rem;
+}
+
 </style>
 </head>
 <body>
@@ -122,12 +149,12 @@
 
 <div class="container">
 
-  <!-- Image Banner -->
+  <!-- Banner -->
   <div class="banner">
-    <img src="wannasmile-banner.png" alt="WannaSmile Banner" class="banner-img">
+    <img src="wannasmile-banner.png" alt="WannaSmile Banner">
   </div>
 
-  <!-- Asset Card -->
+  <!-- Asset Card Content -->
   <div class="asset-card">
     <h2>WannaSmile v0.8</h2>
     <p>This package includes all the HTML files needed to explore WannaSmile v0.8:</p>
