@@ -27,17 +27,26 @@ body {
   line-height: 1.6;
 }
 
-/* Header: background only, title.png uses natural size */
+/* Header: full width & height background */
 header {
-  margin: 0;
-  padding: 0;
+  width: 100%;
+  height: 200px; /* adjust as needed */
   background-image: url("header.png");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
+  background-size: 100% 100%; /* stretch to fill container */
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+/* Title image: 50% of container width and height, centered */
+header img {
+  width: 50%;
+  height: 50%;
+  object-fit: contain;
+  display: block;
 }
 
 /* Container */
