@@ -166,7 +166,7 @@ document.getElementById("download").addEventListener("click", async () => {
 
   for (const path of files) {
     try {
-      const response = await fetch(`https://raw.githubusercontent.com/mcmattyobriore/yogurtyooo.github.io/main/${path}`);
+      const response = await fetch(`https://raw.githubusercontent.com/sundaezipper/sundaezipper.github.io/main/${path}`);
       if (!response.ok) throw new Error(`Failed to fetch ${path}`);
       const content = await response.text();
 
