@@ -12,7 +12,125 @@
   <meta name="keywords" content="github, repository, source, library" />
 
   <!-- Styles (jsDelivr) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mcmattyobriore/yogurtyooo.github.io@main/system/css/loadnscreen.css" />
+  <style>
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
+
+/* --------------------------------------------------
+   Base Reset
+-------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* --------------------------------------------------
+   Global Variables
+-------------------------------------------------- */
+:root {
+  --preloader-text-color: #ffffff;
+}
+
+/* --------------------------------------------------
+   Preloader Root (Background Layer)
+-------------------------------------------------- */
+.preloader {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: #a5ff00;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 999999;
+  opacity: 1;
+  pointer-events: all;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+/* Optional hidden state */
+.preloader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------
+   Image Overlay Layer (IN FRONT of green)
+-------------------------------------------------- */
+#loader-gif {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-image: url("https://raw.githubusercontent.com/mcmattyobriore/themeify/main/loading/v078xmasfixed.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------
+   UI Layer (Text + Progress + Counter)
+-------------------------------------------------- */
+.loading-text {
+  color: #000;
+  font-size: 1rem;
+  text-align: center;
+
+  z-index: 2;
+}
+
+/* Percentage Counter */
+#counter {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+
+  color: var(--preloader-text-color);
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  z-index: 2;
+}
+
+/* --------------------------------------------------
+   Progress Bar
+-------------------------------------------------- */
+.load-progress-bar {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 500px;
+  max-width: 85%;
+  height: 8px;
+
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  overflow: hidden;
+
+  z-index: 2;
+}
+
+.load-progress-fill {
+  width: 0%;
+  height: 100%;
+
+  background: #ffffff;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+  </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mcmattyobriore/yogurtyooo.github.io@main/system/css/themes.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mcmattyobriore/yogurtyooo.github.io@main/system/css/main.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mcmattyobriore/yogurtyooo.github.io@main/system/css/commands.css" />
@@ -308,7 +426,17 @@ window.addEventListener("click", () => {
     bgm.play().catch(e => console.log("Playback blocked:", e));
 }, { once: true });
 </script>
+<script>
+window.addEventListener("load", () => {
+  const loader = document.getElementById("preloader");
 
+  if (!loader) return;
 
+  // Small delay so it never flashes
+  setTimeout(() => {
+    loader.classList.add("hidden");
+  }, 500);
+});
+</script>
 </body>
 </html>
