@@ -139,13 +139,25 @@ footer {
       <li>settings.html</li>
     </ul>
     <button id="download" class="download-btn">Download ZIP</button>
+    <button id="visit" class="visit-btn">Preview ZIP</button>
+    <button id="support" class="support-btn">Preview ZIP</button>
   </div>
 </div>
 
 <footer>
   &copy; 2025 SundaeZipper | by mcmattyobriore on github
 </footer>
-  
+<script>
+  document.getElementById("visit").addEventListener("click", function () {
+    window.open("", "_blank");
+  });
+</script>
+<script>
+  document.getElementById("support").addEventListener("click", function () {
+    window.open("", "_blank");
+  });
+</script>
+
 <script>
 document.getElementById("download").addEventListener("click", async () => {
   const zip = new JSZip();
