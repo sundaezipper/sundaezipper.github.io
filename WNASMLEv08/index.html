@@ -130,6 +130,25 @@
   border-radius: 4px;
   transition: width 0.3s ease;
 }
+#loaderText {
+  visibility: hidden; /* keeps space */
+  /* OR */
+  display: none; /* removes space */
+}
+#loader {
+  width: 400px;
+  height: 10px;
+  background: #222;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+#progressBar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #ff3b3b, #ff7676);
+  transition: width 0.3s ease;
+}
   </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mcmattyobriore/yogurtyooo.github.io@main/system/css/themes.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mcmattyobriore/yogurtyooo.github.io@main/system/css/main.css" />
@@ -429,12 +448,33 @@ window.addEventListener("click", () => {
 <script>
 window.addEventListener("load", () => {
   const loader = document.getElementById("preloader");
+  const bar = document.getElementById("progressBar");
+  const counter = document.getElementById("counter");
 
-  if (!loader) return;
+  if (!loader || !bar) return;
 
-  // Small delay so it never flashes
+  let progress = 0;
+
+  const fillInterval = setInterval(() => {
+    progress += Math.random() * 7;
+
+    if (progress >= 90) {
+      progress = 90;
+      clearInterval(fillInterval);
+    }
+
+    bar.style.width = progress + "%";
+    if (counter) counter.textContent = Math.floor(progress) + "%";
+  }, 180);
+
+  // Finish loading
   setTimeout(() => {
-    loader.classList.add("hidden");
+    bar.style.width = "100%";
+    if (counter) counter.textContent = "100%";
+
+    setTimeout(() => {
+      loader.classList.add("hidden");
+    }, 350);
   }, 12000);
 });
 </script>
