@@ -136,6 +136,9 @@ footer {
   padding: 2rem 1rem;
   color: #777;
 }
+#overlay {
+  position: fixed;
+}
 </style>
 </head>
 
@@ -214,16 +217,20 @@ downloadBtn.addEventListener("click", async () => {
   zipSound.currentTime = 0;
   zipSound.play();
 
-  // Quick frame animation
   let i = 0;
-  const interval = setInterval(() => {
-    overlay.style.backgroundImage = `url('${frames[i]}')`;
-    i++;
-    if (i >= frames.length) {
-      clearInterval(interval);
-      overlay.style.display = "none"; // hide overlay after animation
-    }
-  }, 100); // 100ms per frame, adjust speed here
+const interval = setInterval(() => {
+  overlay.style.backgroundImage = `url('${frames[i]}')`;
+  i++;
+  if (i >= frames.length) {
+    clearInterval(interval);
+    overlay.style.backgroundImage = `url('${frames[frames.length - 1]}')`;
+
+    // Hide overlay after 6 seconds
+    setTimeout(() => {
+      overlay.style.display = "none";
+    }, 6000);
+  }
+}, 100); // 100ms per frame
 
   // Continue original download logic here (JSZip)
   const zip = new JSZip();
