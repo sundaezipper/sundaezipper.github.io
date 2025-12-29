@@ -182,10 +182,51 @@ footer {
   });
 </script>
 
-<script>
-document.getElementById("download").addEventListener("click", async () => {
-  const zip = new JSZip();
+<div id="overlay" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; background-size:cover; background-position:center;"></div>
 
+<audio id="zipSound" src="../system/images/zip/audio/Sundaezipped.mp3"></audio>
+
+<script>
+const downloadBtn = document.getElementById("download");
+const overlay = document.getElementById("overlay");
+const zipSound = document.getElementById("zipSound");
+
+// Images for animation (replace with your image paths)
+const frames = [
+  "../system/images/zip/start.png",
+  "../system/images/zip/middl3.png",
+  "../system/images/zip/finish.png"
+];
+
+downloadBtn.addEventListener("click", async () => {
+  // Get container position & size
+  const container = document.querySelector(".container");
+  const rect = container.getBoundingClientRect();
+
+  // Position overlay over container
+  overlay.style.display = "block";
+  overlay.style.top = rect.top + "px";
+  overlay.style.left = rect.left + "px";
+  overlay.style.width = rect.width + "px";
+  overlay.style.height = rect.height + "px";
+
+  // Play zip sound
+  zipSound.currentTime = 0;
+  zipSound.play();
+
+  // Quick frame animation
+  let i = 0;
+  const interval = setInterval(() => {
+    overlay.style.backgroundImage = `url('${frames[i]}')`;
+    i++;
+    if (i >= frames.length) {
+      clearInterval(interval);
+      overlay.style.display = "none"; // hide overlay after animation
+    }
+  }, 100); // 100ms per frame, adjust speed here
+
+  // Continue original download logic here (JSZip)
+  const zip = new JSZip();
   const files = [
     "WNASMLEv08/index.html",
     "WNASMLEv08/readme.txt",
@@ -213,22 +254,13 @@ document.getElementById("download").addEventListener("click", async () => {
     try {
       const url = `https://raw.githubusercontent.com/sundaezipper/sundaezipper.github.io/main/${path}`;
       const response = await fetch(url);
-      if (!response.ok) throw new Error(`Failed to fetch ${url}`);
       const content = await response.text();
-
       const pathParts = path.split('/');
       const fileName = pathParts.pop();
       let folder = zip;
-
-      for (const part of pathParts) {
-        folder = folder.folder(part); // creates folder if it doesn't exist
-      }
-
+      for (const part of pathParts) folder = folder.folder(part);
       folder.file(fileName, content);
-
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) { console.error(err); }
   }
 
   const zipBlob = await zip.generateAsync({ type: "blob" });
@@ -240,6 +272,7 @@ document.getElementById("download").addEventListener("click", async () => {
   document.body.removeChild(a);
 });
 </script>
+
 
 </body>
 </html>
