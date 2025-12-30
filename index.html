@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SundaeZipper | WannaSmile v0.8 Download</title>
 <link id="favicon" rel="icon" href="https://raw.githubusercontent.com/sundaezipper/sundaezipper.github.io/main/favicon.png" />
-  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 <style>
@@ -27,21 +26,20 @@ body {
   line-height: 1.6;
 }
 
-/* Header: full width & height background */
+/* Header */
 header {
   width: 100%;
-  height: 150px; /* adjust as needed */
+  height: 150px;
   background-image: url("header.png");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 100% 100%; /* stretch to fill container */
+  background-size: 100% 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
 }
 
-/* Title image: 50% of container width and height, centered */
 header img {
   width: 50%;
   height: 50%;
@@ -57,6 +55,7 @@ header img {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  position: relative; /* make overlay absolute relative to this */
 }
 
 /* Banner inside container */
@@ -91,26 +90,8 @@ header img {
   padding-left: 1.2rem;
 }
 
-/* Download button */
-.download-btn {
-  padding: 0.6rem 1.2rem;
-  background: #ff6f61;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-}
-.support-btn {
-  padding: 0.6rem 1.2rem;
-  background: #ff6f61;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-}
-.visit-btn {
+/* Buttons */
+.download-btn, .support-btn, .visit-btn {
   padding: 0.6rem 1.2rem;
   background: #ff6f61;
   color: white;
@@ -120,13 +101,7 @@ header img {
   font-weight: bold;
 }
 
-.download-btn:hover {
-  background: #e65a4f;
-}
-.support-btn:hover {
-  background: #e65a4f;
-}
-.visit-btn:hover {
+.download-btn:hover, .support-btn:hover, .visit-btn:hover {
   background: #e65a4f;
 }
 
@@ -136,9 +111,20 @@ footer {
   padding: 2rem 1rem;
   color: #777;
 }
+
+/* Overlay inside container */
 #overlay {
-  position: relative;
-  border-radius:12px;
+  display: none;
+  position: absolute; /* relative to container */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  z-index: 10; /* appear on top of content */
 }
 </style>
 </head>
@@ -153,6 +139,9 @@ footer {
   <div class="banner">
     <img src="wannasmile-banner.png" alt="WannaSmile Banner">
   </div>
+
+  <!-- Overlay -->
+  <div id="overlay"></div>
 
   <!-- Content -->
   <div class="asset-card">
@@ -175,27 +164,22 @@ footer {
 <footer>
   &copy; 2025 SundaeZipper | by mcmattyobriore on github
 </footer>
-<script>
-  document.getElementById("visit").addEventListener("click", function () {
-    window.open("https://sundaezipper.github.io/WNASMLEv08/", "_blank");
-  });
-</script>
-<script>
-  document.getElementById("support").addEventListener("click", function () {
-    window.open("https://youtube.com/@rhap5ody?si=ZOALGkmYfo_c96xL", "_blank");
-  });
-</script>
-
-<div id="overlay" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; background-size:cover; background-position:center;"></div>
 
 <audio id="zipSound" src="../system/images/zip/audio/Sundaezipped.mp3"></audio>
 
 <script>
+document.getElementById("visit").addEventListener("click", function () {
+  window.open("https://sundaezipper.github.io/WNASMLEv08/", "_blank");
+});
+document.getElementById("support").addEventListener("click", function () {
+  window.open("https://youtube.com/@rhap5ody?si=ZOALGkmYfo_c96xL", "_blank");
+});
+
 const downloadBtn = document.getElementById("download");
 const overlay = document.getElementById("overlay");
 const zipSound = document.getElementById("zipSound");
 
-// Images for animation (replace with your image paths)
+// Images for animation
 const frames = [
   "../system/images/zip/start.png",
   "../system/images/zip/middl3.png",
@@ -203,37 +187,32 @@ const frames = [
 ];
 
 downloadBtn.addEventListener("click", async () => {
-  // Get container position & size
-  const container = document.querySelector(".container");
-  const rect = container.getBoundingClientRect();
-
-  // Position overlay over container
+  // Show overlay on top of container
   overlay.style.display = "block";
-  overlay.style.top = rect.top + "px";
-  overlay.style.left = rect.left + "px";
-  overlay.style.width = rect.width + "px";
-  overlay.style.height = rect.height + "px";
+  overlay.style.backgroundImage = `url('${frames[0]}')`; // start frame
 
-  // Play zip sound
+  // Play sound
   zipSound.currentTime = 0;
   zipSound.play();
 
+  // Animate frames quickly
   let i = 0;
-const interval = setInterval(() => {
-  overlay.style.backgroundImage = `url('${frames[i]}')`;
-  i++;
-  if (i >= frames.length) {
-    clearInterval(interval);
-    overlay.style.backgroundImage = `url('${frames[frames.length - 1]}')`;
+  const interval = setInterval(() => {
+    i++;
+    if (i < frames.length) {
+      overlay.style.backgroundImage = `url('${frames[i]}')`;
+    } else {
+      clearInterval(interval);
 
-    // Hide overlay after 6 seconds
-    setTimeout(() => {
-      overlay.style.display = "none";
-    }, 6000);
-  }
-}, 100); // 100ms per frame
+      // Keep last frame for 6 seconds, then hide overlay
+      setTimeout(() => {
+        overlay.style.display = "none";
+        overlay.style.backgroundImage = `url('${frames[0]}')`; // reset to start
+      }, 6000);
+    }
+  }, 100);
 
-  // Continue original download logic here (JSZip)
+  // JSZip download logic
   const zip = new JSZip();
   const files = [
     "WNASMLEv08/index.html",
@@ -280,7 +259,6 @@ const interval = setInterval(() => {
   document.body.removeChild(a);
 });
 </script>
-
 
 </body>
 </html>
