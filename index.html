@@ -165,7 +165,7 @@ footer {
   &copy; 2025 SundaeZipper | by mcmattyobriore on github
 </footer>
 
-<audio id="zipSound" src="../system/images/zip/audio/Sundaezipped.mp3"></audio>
+<audio id="zipSound" src=""></audio>
 
 <script>
 document.getElementById("visit").addEventListener("click", function () {
@@ -181,9 +181,7 @@ const zipSound = document.getElementById("zipSound");
 
 // Images for animation
 const frames = [
-  "../system/images/zip/start.png",
-  "../system/images/zip/middl3.png",
-  "../system/images/zip/finish.png"
+  ""
 ];
 
 downloadBtn.addEventListener("click", async () => {
@@ -210,7 +208,7 @@ downloadBtn.addEventListener("click", async () => {
         overlay.style.backgroundImage = `url('${frames[0]}')`; // reset to start
       }, 6000);
     }
-  }, 250);
+  }, 0);
 
   // JSZip download logic
   const zip = new JSZip();
