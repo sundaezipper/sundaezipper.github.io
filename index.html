@@ -126,6 +126,38 @@ footer {
   border-radius: 12px;
   z-index: 10; /* appear on top of content */
 }
+.file-tree,
+.file-tree ul {
+  list-style: none;
+  padding-left: 1rem;
+  margin: 0;
+}
+
+.file-tree li {
+  margin: 0.25rem 0;
+}
+
+summary {
+  cursor: pointer;
+  user-select: none;
+  font-weight: 500;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary::before {
+  content: "▶";
+  display: inline-block;
+  width: 1em;
+  margin-right: 0.3em;
+  transition: transform 0.2s ease;
+}
+
+details[open] > summary::before {
+  transform: rotate(90deg);
+}
 </style>
 </head>
 
@@ -143,22 +175,42 @@ footer {
   <!-- Overlay -->
   <div id="overlay"></div>
 
-  <!-- Content -->
-  <div class="asset-card">
-    <h2>WannaSmile v0.8</h2>
-    <p>This package includes all the HTML files needed to explore WannaSmile v0.8:</p>
-    <ul>
-      <li>index.html</li>
-      <li>readme.txt</li>
-      <li>discovery.html</li>
-      <li>favorites.html</li>
-      <li>profile.html</li>
-      <li>settings.html</li>
-    </ul>
-    <button id="download" class="download-btn">Download ZIP</button>
-    <button id="visit" class="visit-btn">Preview ZIP</button>
-    <button id="support" class="support-btn">Support Creator</button>
-  </div>
+<ul class="file-tree">
+  <!-- root files -->
+  <li>index.html</li>
+  <li>readme.txt</li>
+  <li>license.txt</li>
+
+  <!-- pages folder -->
+  <li>
+    <details>
+      <summary>pages/</summary>
+
+      <ul>
+        <li>
+          <details>
+            <summary>header/</summary>
+            <ul>
+              <li>support.html</li>
+              <li>settings.html</li>
+              <li>profile.html</li>
+              <li>info.html</li>
+              <li>favorites.html</li>
+              <li>discovery.html</li>
+            </ul>
+          </details>
+        </li>
+
+        <li>footer/</li>
+        <li>dashboard/</li>
+      </ul>
+    </details>
+  </li>
+
+  <!-- audio folder -->
+  <li>audio/</li>
+</ul>
+
 </div>
 
 <footer>
