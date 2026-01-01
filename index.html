@@ -126,121 +126,125 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
 
 <script>
-// ----- Profile Logic -----
-const defaultPic = "https://raw.githubusercontent.com/sundaezipper/sundaezipper.github.io/main/system/placeholder/default.jpeg.png";
+/* ================= PROFILE LOGIC (MERGED & FIXED) ================= */
+
+const defaultPic =
+  "https://raw.githubusercontent.com/sundaezipper/sundaezipper.github.io/main/system/placeholder/default.jpeg";
+
+const profileOverlay = document.getElementById("profileOverlay");
 const profileCard = document.getElementById("profileCard");
 const editCard = document.getElementById("editCard");
-const profileOverlay = document.getElementById("profileOverlay");
 
 const profilePic = document.getElementById("profilePic");
+const headerProfileImg = document.getElementById("headerProfileImg");
+
 const usernameDisplay = document.getElementById("username");
+const usernameInput = document.getElementById("usernameInput");
+
 const editBtn = document.getElementById("editBtn");
+const followBtn = document.getElementById("followBtn");
+const likeBtn = document.getElementById("likeBtn");
 
 const preview = document.getElementById("profilePreview");
-const usernameInput = document.getElementById("usernameInput");
 const fileInput = document.getElementById("profilePicInput");
 const removeBtn = document.getElementById("removePicBtn");
 const form = document.getElementById("editForm");
-
-const followBtn = document.getElementById("followBtn");
-const likeBtn = document.getElementById("likeBtn");
 
 const cropContainer = document.getElementById("cropContainer");
 const cropPreview = document.getElementById("cropPreview");
 const cropConfirm = document.getElementById("cropConfirm");
 const cropCancel = document.getElementById("cropCancel");
+
 let cropper = null;
 let croppedImageData = null;
 
-const headerProfileImg = document.getElementById("headerProfileImg");
+/* ================= INIT LOAD ================= */
 
-// Load saved info
 window.addEventListener("DOMContentLoaded", () => {
   const savedPic = localStorage.getItem("profilePic") || defaultPic;
   const savedName = localStorage.getItem("nickname") || "Nickname";
 
   profilePic.src = savedPic;
   preview.src = savedPic;
+  headerProfileImg.src = savedPic;
+
   usernameDisplay.textContent = savedName;
   usernameInput.value = savedName;
-
-  headerProfileImg.src = savedPic;
 
   if (localStorage.getItem("isFollowing") === "true") {
     followBtn.textContent = "Following";
     followBtn.classList.add("following");
   }
+
   if (localStorage.getItem("isLiked") === "true") {
     likeBtn.classList.add("liked");
   }
 });
 
-// Function to open profile modal
+/* ================= OPEN / CLOSE ================= */
+
 function openProfile() {
-  profileCard.style.display = "block";
   profileOverlay.style.display = "block";
+  profileCard.style.display = "flex";
   editCard.style.display = "none";
 }
 
-// Function to close all profile modals
 function closeProfile() {
+  profileOverlay.style.display = "none";
   profileCard.style.display = "none";
   editCard.style.display = "none";
-  profileOverlay.style.display = "none";
 }
 
-// Header profile click
-document.getElementById("headerProfile").addEventListener("click", () => {
-  if (profileCard.style.display === "block" || editCard.style.display === "block") {
-    closeProfile();
-  } else {
-    openProfile();
-  }
-});
+/* Header avatar click */
+document.getElementById("headerProfile").addEventListener("click", openProfile);
 
-// Close buttons
+/* Close buttons */
 document.getElementById("closeProfileCard").addEventListener("click", closeProfile);
 document.getElementById("closeEditCard").addEventListener("click", closeProfile);
 
-// Edit button inside profile card
+/* ================= EDIT MODE ================= */
+
 editBtn.addEventListener("click", () => {
   profileCard.style.display = "none";
-  editCard.style.display = "block";
+  editCard.style.display = "flex";
 });
 
-// Remove picture
+/* ================= IMAGE REMOVE ================= */
+
 removeBtn.addEventListener("click", () => {
   preview.src = defaultPic;
   localStorage.setItem("profilePic", defaultPic);
+  profilePic.src = defaultPic;
   headerProfileImg.src = defaultPic;
 });
 
-// File input cropper
-fileInput.addEventListener("change", (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      cropContainer.style.display = "block";
-      cropPreview.src = e.target.result;
+/* ================= IMAGE CROP ================= */
 
-      if (cropper) cropper.destroy();
-      cropper = new Cropper(cropPreview, {
-        aspectRatio: 1,
-        viewMode: 1,
-        background: false,
-        dragMode: "move",
-        cropBoxResizable: true,
-      });
-    };
-    reader.readAsDataURL(file);
-  }
+fileInput.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    cropContainer.style.display = "block";
+    cropPreview.src = ev.target.result;
+
+    if (cropper) cropper.destroy();
+    cropper = new Cropper(cropPreview, {
+      aspectRatio: 1,
+      viewMode: 1,
+      dragMode: "move",
+      background: false,
+    });
+  };
+  reader.readAsDataURL(file);
 });
 
 cropConfirm.addEventListener("click", () => {
   const canvas = cropper.getCroppedCanvas({ width: 300, height: 300 });
   croppedImageData = canvas.toDataURL("image/png");
   preview.src = croppedImageData;
+
   cropContainer.style.display = "none";
   cropper.destroy();
   cropper = null;
@@ -253,23 +257,28 @@ cropCancel.addEventListener("click", () => {
   fileInput.value = "";
 });
 
+/* ================= SAVE PROFILE ================= */
+
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  const username = usernameInput.value.trim();
-  if (username) {
-    localStorage.setItem("nickname", username);
-    usernameDisplay.textContent = username;
+
+  const name = usernameInput.value.trim();
+  if (name) {
+    localStorage.setItem("nickname", name);
+    usernameDisplay.textContent = name;
   }
 
   const finalImage = croppedImageData || preview.src || defaultPic;
   localStorage.setItem("profilePic", finalImage);
+
   profilePic.src = finalImage;
   headerProfileImg.src = finalImage;
 
   closeProfile();
 });
 
-// Follow & like
+/* ================= FOLLOW / LIKE ================= */
+
 followBtn.addEventListener("click", () => {
   const following = followBtn.classList.toggle("following");
   followBtn.textContent = following ? "Following" : "Follow";
