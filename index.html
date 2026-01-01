@@ -44,12 +44,16 @@ header {
   position: absolute;
   top: 10px;
   right: 10px;
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
-  /* border removed */
+  transition: transform 0.3s ease; /* smooth scaling */
+}
+
+#headerProfile:hover {
+  transform: scale(1.1); /* grow by 10% on hover */
 }
 
 #headerProfile img {
