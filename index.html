@@ -49,7 +49,7 @@ header {
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
-  border: 2px solid #fff;
+  /* border removed */
 }
 
 #headerProfile img {
@@ -141,14 +141,44 @@ footer {
   z-index: 10;
 }
 
+/* Profile editor overlay */
+#profileOverlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: 999;
+}
+
 /* Profile card styles */
 .profile-card, .edit-card {
   background: #222;
-  border-radius: 16px;
+  border-radius: 12px;
   padding: 20px;
   text-align: center;
   box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  z-index: 1000;
 }
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: #ff4444;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+.close-btn:hover { background: #ff6666; }
 
 .profile-card { width: 320px; }
 
@@ -163,7 +193,7 @@ footer {
 
 .username { font-size: 20px; margin-bottom: 20px; }
 
-.edit-card { width: 400px; display: none; }
+.edit-card { width: 400px; }
 
 .profile-preview {
   width: 120px;
@@ -309,8 +339,12 @@ input[type="text"] {
 
 <audio id="zipSound" src=""></audio>
 
+<!-- Profile overlay -->
+<div id="profileOverlay"></div>
+
 <!-- Profile editing modal -->
-<div class="profile-card" id="profileCard" style="display:none;">
+<div class="profile-card" id="profileCard">
+  <button class="close-btn" id="closeProfileCard">X</button>
   <img src="placeholderpfp.png" alt="Profile Picture" id="profilePic">
   <div class="username" id="username">Nickname</div>
   <button class="edit-btn" id="editBtn">Edit Profile</button>
@@ -321,6 +355,7 @@ input[type="text"] {
 </div>
 
 <div class="edit-card" id="editCard">
+  <button class="close-btn" id="closeEditCard">X</button>
   <h2>Edit Profile</h2>
   <img id="profilePreview" class="profile-preview" src="placeholderpfp.png" alt="Profile Picture"><br>
   <form id="editForm">
@@ -352,6 +387,7 @@ input[type="text"] {
 const defaultPic = "placeholderpfp.png";
 const profileCard = document.getElementById("profileCard");
 const editCard = document.getElementById("editCard");
+const profileOverlay = document.getElementById("profileOverlay");
 
 const profilePic = document.getElementById("profilePic");
 const usernameDisplay = document.getElementById("username");
@@ -396,23 +432,47 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Open edit profile modal when clicking header profile
-document.getElementById("headerProfile").addEventListener("click", () => {
+// Function to open profile modal
+function openProfile() {
   profileCard.style.display = "block";
+  profileOverlay.style.display = "block";
+  editCard.style.display = "none";
+}
+
+// Function to close all profile modals
+function closeProfile() {
+  profileCard.style.display = "none";
+  editCard.style.display = "none";
+  profileOverlay.style.display = "none";
+}
+
+// Header profile click
+document.getElementById("headerProfile").addEventListener("click", () => {
+  if (profileCard.style.display === "block" || editCard.style.display === "block") {
+    closeProfile();
+  } else {
+    openProfile();
+  }
 });
 
-// Edit profile
+// Close buttons
+document.getElementById("closeProfileCard").addEventListener("click", closeProfile);
+document.getElementById("closeEditCard").addEventListener("click", closeProfile);
+
+// Edit button inside profile card
 editBtn.addEventListener("click", () => {
   profileCard.style.display = "none";
   editCard.style.display = "block";
 });
 
+// Remove picture
 removeBtn.addEventListener("click", () => {
   preview.src = defaultPic;
   localStorage.setItem("profilePic", defaultPic);
   headerProfileImg.src = defaultPic;
 });
 
+// File input cropper
 fileInput.addEventListener("change", (event) => {
   const file = event.target.files[0];
   if (file) {
@@ -463,8 +523,7 @@ form.addEventListener("submit", (e) => {
   profilePic.src = finalImage;
   headerProfileImg.src = finalImage;
 
-  editCard.style.display = "none";
-  profileCard.style.display = "block";
+  closeProfile();
 });
 
 // Follow & like
