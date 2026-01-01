@@ -127,28 +127,15 @@ footer {
   z-index: 10; /* appear on top of content */
 }
 
-
-.file-tree,
-.file-tree ul {
-  list-style: none;
-  padding-left: 1rem;
-  margin: 0;
-}
-
-.file-tree li {
-  margin: 0.25rem 0;
-}
-
-summary {
-  cursor: pointer;
-  user-select: none;
-  font-weight: 500;
-}
-
+/* Remove all native markers */
 summary::-webkit-details-marker {
-  display: none;
+  display: none;  /* Chrome, Safari */
+}
+summary::marker {
+  content: none;  /* Firefox */
 }
 
+/* Custom small arrow */
 summary::before {
   content: "▶";
   display: inline-block;
@@ -160,7 +147,6 @@ summary::before {
 details[open] > summary::before {
   transform: rotate(90deg);
 }
-
 </style>
 </head>
 
