@@ -270,7 +270,7 @@ input[type="text"] {
 <header>
   <img src="title.png" alt="WannaSmile Banner">
   <div id="headerProfile">
-    <img id="headerProfileImg" src="placeholderpfp.png" alt="Profile">
+    <img id="headerProfileImg" src="../system/placeholder/default.jpeg" alt="Profile">
   </div>
 </header>
 
@@ -348,7 +348,7 @@ input[type="text"] {
 <!-- Profile editing modal -->
 <div class="profile-card" id="profileCard">
   <button class="close-btn" id="closeProfileCard">X</button>
-  <img src="placeholderpfp.png" alt="Profile Picture" id="profilePic">
+  <img src="../system/placeholder/default.jpeg" alt="Profile Picture" id="profilePic">
   <div class="username" id="username">Nickname</div>
   <button class="edit-btn" id="editBtn">Edit Profile</button>
   <div class="button-group">
@@ -360,7 +360,7 @@ input[type="text"] {
 <div class="edit-card" id="editCard">
   <button class="close-btn" id="closeEditCard">X</button>
   <h2>Edit Profile</h2>
-  <img id="profilePreview" class="profile-preview" src="placeholderpfp.png" alt="Profile Picture"><br>
+  <img id="profilePreview" class="profile-preview" src="../system/placeholder/default.jpeg" alt="Profile Picture"><br>
   <form id="editForm">
     <label for="profilePicInput">Change Profile Picture:</label><br>
     <input type="file" id="profilePicInput" accept="image/*"><br>
@@ -387,7 +387,7 @@ input[type="text"] {
 
 <script>
 // ----- Profile Logic -----
-const defaultPic = "placeholderpfp.png";
+const defaultPic = "../system/placeholder/default.jpeg.png";
 const profileCard = document.getElementById("profileCard");
 const editCard = document.getElementById("editCard");
 const profileOverlay = document.getElementById("profileOverlay");
