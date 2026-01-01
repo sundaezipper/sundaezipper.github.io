@@ -262,6 +262,43 @@ input[type="text"] {
 #cropPreview { max-width: 100%; border-radius: 8px; }
 #cropActions { margin-top: 10px; }
 #cropActions button { background: #444; margin: 5px; }
+/* Center everything inside the profile card */
+.profile-card {
+  width: 400px;
+  height: 600px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* horizontal centering */
+  justify-content: center;  /* vertical centering */
+
+  gap: 14px;                /* spacing between items */
+  text-align: center;
+}
+
+/* Keep the exit button at its current position */
+.profile-card .close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+}
+
+/* Make sure image + text don’t stretch oddly */
+.profile-card img {
+  display: block;
+}
+
+/* Center the follow + like buttons together */
+.profile-card .button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* Optional: slightly tighter username spacing */
+.username {
+  margin-bottom: 10px;
+}
 </style>
 </head>
 
