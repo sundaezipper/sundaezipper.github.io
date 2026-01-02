@@ -132,88 +132,165 @@ footer {
   z-index: 998;
 }
 
-/* =========================================================
-   PROFILE EDITOR (RESTORED OLD STYLE)
-   ========================================================= */
+/* ================= PROFILE OVERLAY ================= */
 
-/* ===== PROFILE + EDIT CARDS ===== */
+#profileOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 998;
+}
+
+/* ================= SHARED CARD BASE ================= */
+
 .profile-card,
 .edit-card {
   display: none;
   position: fixed;
   top: 50%;
   left: 50%;
+  width: 450px;
+  height: 600px;
   transform: translate(-50%, -50%);
   background: #222;
   border-radius: 16px;
-  padding: 20px;
-  width: 360px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  font-family: monospace;
+  color: white;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-  color: white;
   z-index: 999;
+  overflow: hidden;
 }
 
-/* ===== PROFILE CARD ===== */
-.profile-card img {
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid #444;
-  margin-bottom: 15px;
-}
+/* ================= EXIT BUTTON ================= */
 
-.username {
+.close-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  background: #ff3333;
+  border: none;
+  border-radius: 8px;
+  color: white;
   font-size: 20px;
-  margin-bottom: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
-/* ===== EDIT CARD ===== */
-.edit-card {
-  width: 420px;
+.close-btn:hover {
+  transform: scale(1.15);
+  background: #ff5555;
 }
 
-/* preview */
-.profile-preview {
-  width: 120px;
-  height: 120px;
+/* ================= PROFILE VIEW ================= */
+
+.profile-card img {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  width: 260px;
+  height: 260px;
+  transform: translateX(-50%);
   border-radius: 50%;
+  border: 4px solid #444;
   object-fit: cover;
-  border: 3px solid #444;
-  margin-bottom: 15px;
 }
 
-/* ===== INPUTS ===== */
-input[type="file"] {
-  margin: 15px 0;
+.profile-card .username {
+  position: absolute;
+  top: 360px;
+  left: 0;
+  width: 100%;
+  font-size: 22px;
+}
+
+.profile-card .edit-btn {
+  position: absolute;
+  top: 410px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* follow + like buttons */
+.profile-card .button-group {
+  position: absolute;
+  top: 470px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ================= EDIT PROFILE ================= */
+
+.edit-card h2 {
+  position: absolute;
+  top: 24px;
+  left: 0;
+  width: 100%;
+  font-size: 20px;
+}
+
+.profile-preview {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  width: 140px;
+  height: 140px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  border: 3px solid #444;
+  object-fit: cover;
+}
+
+.edit-card form {
+  position: absolute;
+  top: 230px;
+  left: 0;
+  width: 100%;
+}
+
+/* ================= FORM ELEMENTS ================= */
+
+.edit-card label {
+  display: block;
+  margin: 10px 0 6px;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.edit-card input[type="file"] {
+  width: 80%;
+  margin-bottom: 10px;
   color: white;
 }
 
-input[type="text"] {
+.edit-card input[type="text"] {
   width: 80%;
   padding: 10px;
   border-radius: 6px;
   border: none;
   font-size: 16px;
-  margin-bottom: 15px;
+  margin-bottom: 14px;
 }
 
-/* ===== BUTTONS ===== */
+/* ================= BUTTONS ================= */
+
 .edit-btn,
 .follow-btn,
 .like-btn,
 .remove-btn,
-.save-btn,
-.return-btn {
+.save-btn {
   padding: 10px 18px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  margin: 5px;
-  transition: transform 0.2s, background 0.2s;
+  margin: 4px;
+  transition: transform 0.15s ease, background 0.15s ease;
 }
 
 .edit-btn,
@@ -237,9 +314,7 @@ input[type="text"] {
 
 .like-btn {
   background: #555;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  color: white;
 }
 
 .like-btn.liked .heart {
@@ -254,48 +329,39 @@ input[type="text"] {
   background: #666;
 }
 
-/* ===== CROP ===== */
+/* ================= SAVE BUTTON ================= */
+
+.save-btn {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ================= CROP AREA ================= */
+
 #cropContainer {
   display: none;
-  margin-top: 10px;
+  width: 80%;
+  margin: 10px auto 0;
 }
 
 #cropPreview {
-  max-width: 100%;
+  width: 100%;
   border-radius: 8px;
 }
 
 #cropActions {
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 #cropActions button {
   background: #444;
-  margin: 5px;
-}
-
-/* ===== DOWNLOAD TOAST ===== */
-.download-toast {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  background: #1e1e1e;
   color: white;
-  padding: 14px 18px;
-  border-radius: 14px;
-  font-size: 14px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.45);
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.3s, transform 0.3s;
-  z-index: 2000;
+  border-radius: 6px;
+  padding: 6px 12px;
 }
 
-.download-toast.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.download-toast.success {
-  background: #2a7a4a;
+#cropActions button:hover {
+  background: #666;
 }
