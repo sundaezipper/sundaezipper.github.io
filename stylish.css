@@ -218,15 +218,6 @@ footer {
   letter-spacing: 0.5px;
 }
 
-/* ================= BUTTON GROUP ================= */
-.button-group {
-  width: 100%;
-  margin-top: 30px;
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-}
-
 /* ================= EDIT PREVIEW IMAGE ================= */
 .profile-preview {
   width: 140px;
@@ -374,4 +365,69 @@ input[type="text"] {
 .return-btn:hover {
   background: #ff3333;
   transform: translateX(-50%) translateY(-2px);
+}
+/* ================= PROFILE CARD GRID ================= */
+.profile-card {
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  align-items: center;
+  justify-items: center;
+  gap: 16px;
+  padding-top: 48px; /* space for close button */
+}
+
+/* profile image already centered — just ensure grid behavior */
+.profile-card img {
+  margin: 0;
+}
+
+/* username under image */
+.profile-card .username {
+  margin: 0;
+}
+
+/* edit button under username */
+.profile-card .edit-btn {
+  margin-top: 8px;
+}
+/* ================= EDIT CARD GRID ================= */
+.edit-card {
+  display: grid;
+  grid-template-rows: auto auto auto auto auto auto 1fr auto;
+  gap: 14px;
+  text-align: center;
+  padding-top: 48px;
+}
+
+/* heading text */
+.edit-card h2 {
+  margin: 0;
+}
+
+/* profile preview centered */
+.edit-card .profile-preview {
+  margin: 0 auto;
+}
+
+/* labels above inputs */
+.edit-card label {
+  font-size: 14px;
+  color: #ccc;
+  text-align: left;
+  width: 100%;
+}
+
+/* file input spacing fix */
+.edit-card input[type="file"] {
+  margin: 0;
+}
+
+/* username input spacing fix */
+.edit-card input[type="text"] {
+  margin: 0;
+}
+
+/* save button pinned visually to bottom */
+.edit-card .save-btn {
+  align-self: end;
 }
