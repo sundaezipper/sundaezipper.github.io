@@ -613,3 +613,30 @@ input[type="text"] {
 #profileOverlay {
   backdrop-filter: blur(4px);
 }
+/* ================= DOWNLOAD TOAST ================= */
+.download-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #1e1e1e;
+  color: #fff;
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-family: monospace;
+  font-size: 14px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 2000;
+  pointer-events: none;
+}
+
+.download-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.download-toast.success {
+  background: #2a7a4a;
+}
