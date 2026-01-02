@@ -44,6 +44,29 @@ const zipSound = document.getElementById("zipSound");
 let cropper = null;
 let croppedImageData = null;
 
+/* ================= TOAST ALERT ================= */
+
+function showDownloadToast(message, success = false) {
+  let toast = document.querySelector(".download-toast");
+
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.className = "download-toast";
+    document.body.appendChild(toast);
+  }
+
+  toast.textContent = message;
+  toast.classList.toggle("success", success);
+
+  requestAnimationFrame(() => {
+    toast.classList.add("show");
+  });
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, success ? 2500 : 4000);
+}
+
 /* ================= INIT ================= */
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -166,6 +189,8 @@ supportBtn.addEventListener("click", () => {
 downloadBtn.addEventListener("click", async () => {
   overlay.style.display = "block";
 
+  showDownloadToast("Downloading...");
+
   if (zipSound.src) {
     zipSound.currentTime = 0;
     zipSound.play().catch(() => {});
@@ -223,4 +248,6 @@ downloadBtn.addEventListener("click", async () => {
   document.body.removeChild(a);
 
   overlay.style.display = "none";
+
+  showDownloadToast("Download complete!", true);
 });
