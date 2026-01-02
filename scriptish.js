@@ -201,6 +201,7 @@ downloadBtn.addEventListener("click", async () => {
   const files = [
     "WNASMLEv08/index.html",
     "WNASMLEv08/readme.txt",
+    "WNASMLEv08/license.txt",
     "WNASMLEv08/pages/header/discovery.html",
     "WNASMLEv08/pages/header/favorites.html",
     "WNASMLEv08/pages/header/profile.html",
@@ -211,7 +212,6 @@ downloadBtn.addEventListener("click", async () => {
     "WNASMLEv08/pages/dashboard/themes.html",
     "WNASMLEv08/pages/dashboard/credits.html",
     "WNASMLEv08/pages/dashboard/raw.html",
-    "WNASMLEv08/pages/dashboard/flip.html",
     "WNASMLEv08/pages/footer/socials.html",
     "WNASMLEv08/pages/footer/update-logs.html",
     "WNASMLEv08/audio/bgm1.mp3",
